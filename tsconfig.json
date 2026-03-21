@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+
+    /* The magic line that replaces Vite/Webpack */
+    "jsx": "react-jsx",
+
+    /* We need DOM for the frontend, and Bun types for the backend */
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["bun-types"],
+
+    /* Path aliases to keep imports clean */
+    "baseUrl": ".",
+    "paths": {
+      "@public/*": ["public/*"],
+      "@src/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*", "public/**/*"]
+}

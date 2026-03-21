@@ -1,0 +1,28 @@
+{
+  "name": "bun-fullstack-elysia",
+  "version": "1.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fullstack:dev": "bun run --watch src/index.ts",
+    "build:win": "bun build --compile --target bun --outfile server src/index.ts",
+    "build:linux": "bun build --compile --target=bun-linux-x64 src/index.ts --outfile server-linux",
+    "build:fe": "bun build ./public/index.tsx --outdir ./public/dist",
+    "build:fe:min": "bun build ./public/index.tsx --outdir ./public/dist --minify",
+    "build:all": "bun run build:win && bun run build:linux",
+    "audit": "bun audit",
+    "start:win": "server",
+    "start:linux": "server-linux"
+  },
+  "dependencies": {
+    "@elysiajs/static": "latest",
+    "elysia": "latest",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "bun-types": "latest"
+  },
+  "module": "src/index.ts"
+}
