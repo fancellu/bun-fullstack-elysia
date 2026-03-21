@@ -3,18 +3,25 @@
   "version": "1.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "fullstack:dev": "bun run --watch src/index.ts",
-    "build:win": "bun build --compile --target bun --outfile server src/index.ts",
-    "build:linux": "bun build --compile --target=bun-linux-x64 src/index.ts --outfile server-linux",
-    "build:fe": "bun build ./public/index.tsx --outdir ./public/dist",
-    "build:fe:min": "bun build ./public/index.tsx --outdir ./public/dist --minify",
-    "build:all": "bun run build:win && bun run build:linux",
     "audit": "bun audit",
-    "start:win": "server",
-    "start:linux": "server-linux"
+
+    "fullstack:dev": "bun run --watch src/backend/index.ts",
+
+    "start:prod": "bun run src/backend/index.ts --prod",
+
+    "build:be": "bun build --compile --target bun --outfile server src/backend/index.ts",
+    "build:be:linux": "bun build --compile --target=bun-linux-x64 src/backend/index.ts --outfile server-linux",
+    "build:fe": "bun build public/index.tsx --outdir ./public/dist",
+    "build:fe:min": "bun build public/index.tsx --outdir ./public/dist --minify",
+    "build:fe:min:prod": "bun build public/index.tsx --outdir ./public/dist --minify --define \"process.env.NODE_ENV='production'\"",
+    "build:all": "bun run build:be && bun run build:be:linux && bun run build:fe:min",
+
+    "start:win:prod": "./server --prod",
+    "start:linux:prod": "./server-linux --prod"
   },
   "dependencies": {
     "@elysiajs/static": "latest",
+    "@elysiajs/swagger": "^1.3.1",
     "elysia": "latest",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
@@ -22,7 +29,8 @@
   "devDependencies": {
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "concurrently": "^9.2.1"
   },
-  "module": "src/index.ts"
+  "module": "src/backend/index.ts"
 }
