@@ -47,7 +47,7 @@ bun run fullstack:dev
 To deploy for production, follow these steps:
 
 ### 1. Build Frontend Assets
-Build and minify the React code. The `min:prod` script uses `--define` to ensure React runs in production mode (resulting in a tiny ~180kb bundle).
+Build and optimize the React code. The `min:prod` script uses Bun 1.3's native `--production` flag, which automatically enables minification, tree-shaking, and React production transforms (resulting in a tiny ~180kb bundle).
 ```bash
 bun run build:fe:min:prod
 ```

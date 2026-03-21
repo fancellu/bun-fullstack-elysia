@@ -13,7 +13,7 @@
     "build:be:linux": "bun build --compile --target=bun-linux-x64 src/backend/index.ts --outfile server-linux",
     "build:fe": "bun build public/index.tsx --outdir ./public/dist",
     "build:fe:min": "bun build public/index.tsx --outdir ./public/dist --minify",
-    "build:fe:min:prod": "bun build public/index.tsx --outdir ./public/dist --minify --define \"process.env.NODE_ENV='production'\"",
+    "build:fe:min:prod": "bun build public/index.tsx --outdir ./public/dist --production",
     "build:all": "bun run build:be && bun run build:be:linux && bun run build:fe:min",
 
     "start:win:prod": "./server --prod",
