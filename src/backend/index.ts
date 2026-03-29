@@ -70,10 +70,6 @@ const app = new Elysia()
         }
     })
 
-    // SPA Fallback: Any other GET request that isn't handled above will serve the main index.html
-    // This allows React to handle the routing on the client side.
-
-
 app.listen(process.env.PORT || 3000)
 
 console.log(`🦊 Fullstack server running at http://${app.server?.hostname}:${app.server?.port}`)
