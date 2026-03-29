@@ -12,7 +12,40 @@ console.log('='.repeat(40) + '\n')
 
 const app = new Elysia()
     .use(swagger())
-    
+    .onBeforeHandle(({ params, query, path, body }) => {
+        console.log(`\n[${new Date().toLocaleTimeString()}] ${path}`);
+        if (Object.keys(params || {}).length > 0) console.log('  Params:', params);
+        if (Object.keys(query || {}).length > 0) console.log('  Query:', query);
+        if (body) {
+            // Log body keys but avoid logging large file buffers
+            const bodyKeys = Object.keys(body as object);
+            console.log('  Body:', bodyKeys.join(', '));
+        }
+    })
+    .onError(({ code, request, set }) => {
+        if (code === 'NOT_FOUND') {
+            const url = new URL(request.url);
+            console.log(`Handling NOT_FOUND for ${url}`)
+
+            // 1. Let missing API routes behave normally (return 404)
+            if (url.pathname.startsWith('/api')) {
+                return new Response('Not Found', { status: 404 });
+            }
+
+            // 2. Prevent an infinite loop just in case the root fails
+            if (url.pathname === '/') {
+                return new Response('Root index.html not found', { status: 404 });
+            }
+
+            // 3. Ask our own server for the root page!
+            // This forces Bun's C++ server to intercept it, transpile the TSX,
+            // inject the HMR websocket, and rewrite the HTML tags.
+            url.pathname = '/';
+
+            console.log(`[SPA Fallback] Proxying ${request.url} -> / to trigger bundler`);
+            return fetch(url.toString());
+        }
+    })
     // Serve the React UI from the /public folder at the root '/'
     .use(isProd 
         ? staticPlugin({ prefix: '/' }) 
@@ -37,21 +70,9 @@ const app = new Elysia()
         }
     })
 
-// Only use the custom HTML handler in Production
-if (isProd) {
-    app.get('/', async () => {
-        let html = await Bun.file('public/index.html').text()
-        // Point to the bundled minified JS in production
-        html = html.replace('./index.tsx', './dist/index.js')
-        // Ensure CSS is linked
-        if (!html.includes('dist/index.css')) {
-            html = html.replace('</head>', '    <link rel="stylesheet" href="./dist/index.css">\n</head>')
-        }
-        return new Response(html, {
-            headers: { 'Content-Type': 'text/html' }
-        })
-    })
-}
+    // SPA Fallback: Any other GET request that isn't handled above will serve the main index.html
+    // This allows React to handle the routing on the client side.
+
 
 app.listen(process.env.PORT || 3000)
 

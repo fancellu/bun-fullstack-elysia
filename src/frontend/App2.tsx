@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 // Bun 1.3 handles CSS imports in TSX natively!
 import './App.css'
 
-export function App() {
+export function App2() {
     const [data, setData] = useState<string | null>(null)
     const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
@@ -24,13 +24,6 @@ export function App() {
         document.body.style.margin = '0'
     }, [theme])
 
-    const fetchBackend = async () => {
-        // Standard fetch, no CORS issues because it's served from the same port!
-        const res = await fetch('/api/ping')
-        const json = await res.json()
-        setData(json.data)
-    }
-
     const toggleTheme = () => {
         setTheme(prev => prev === 'light' ? 'dark' : 'light')
     }
@@ -38,7 +31,7 @@ export function App() {
     return (
         <div className="app-container">
             <div className="header">
-                <h1>Bun Fullstack + Elysia + React (No Vite)</h1>
+                <h1>App2</h1>
                 <button 
                     onClick={toggleTheme} 
                     className={`button ${theme === 'dark' ? 'button-dark' : 'button-light'}`}
@@ -46,26 +39,11 @@ export function App() {
                     {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
                 </button>
             </div>
-            
-            <div className="button-group">
-                <button 
-                    onClick={fetchBackend} 
-                    className={`button ${theme === 'dark' ? 'button-dark' : 'button-light'}`}
-                >
-                    Ping Backend
+            <a href="/">
+                <button className={`button ${theme === 'dark' ? 'button-dark' : 'button-light'}`}>
+                    App
                 </button>
-                <a href="/App2">
-                    <button className={`button ${theme === 'dark' ? 'button-dark' : 'button-light'}`}>
-                        App2
-                    </button>
-                </a>
-            </div>
-
-            {data && (
-                <p className={`ping-result ${theme === 'dark' ? 'ping-result-dark' : 'ping-result-light'}`}>
-                    {data}
-                </p>
-            )}
+            </a>
         </div>
     )
 }

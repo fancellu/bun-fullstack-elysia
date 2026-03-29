@@ -37,7 +37,8 @@ The dev server uses Bun's Fullstack mode with HMR. Just run:
 ```bash
 bun run fullstack:dev
 ```
-- Frontend: [http://localhost:3000](http://localhost:3000)
+- Frontend: [http://localhost:3000](http://localhost:3000) => [App.tsx](src/frontend/App.tsx)
+- Frontend: [http://localhost:3000/App2](http://localhost:3000/App2) => [App2.tsx](src/frontend/App2.tsx)
 - API Docs: [http://localhost:3000/swagger](http://localhost:3000/swagger)
 
 ---
@@ -53,19 +54,30 @@ bun run build:fe:min:prod
 ```
 
 ### 2. Build Backend Executable (Optional)
-Compile the server into a standalone Windows `.exe`:
+Compile the server into a standalone Windows `.exe` or Linux binary. 
+During the build, `process.env.NODE_ENV` is statically defined as `"production"` inside the binary.
+
 ```bash
+# Windows
 bun run build:be
+
+# Linux
+bun run build:be:linux
 ```
 
 ### 3. Run in Production Mode
-Use the `--prod` flag to signal the server to use pre-bundled assets and disable the dev-mode watcher.
+
+If you are running the backend using Bun directly, you still need to pass `--prod` to use pre-bundled assets. If you are running the compiled executables, they are natively built for production.
+
 ```bash
-# Via Bun
+# Via Bun (requires --prod flag)
 bun run start:prod
 
-# Via compiled .exe (Windows)
+# Via compiled .exe (Windows - prod is built in)
 bun run start:win:prod
+
+# Via compiled Linux binary (prod is built in)
+bun run start:linux:prod
 ```
 
 ## 📜 Available Scripts
@@ -76,12 +88,17 @@ bun run start:win:prod
 | `start:prod` | Run the backend in Production mode using Bun. |
 | `build:fe:min:prod` | **Recommended**: Smallest frontend bundle for production. |
 | `build:be` | Compile the backend to a Windows binary (`server.exe`). |
-| `build:be:linux` | Compile the backend for Linux systems. |
-| `build:all` | Build everything at once. |
-| `start:win:prod` | Run the compiled Windows executable in production mode. |
+| `build:be:linux` | Compile the backend for Linux systems (`server-linux`). |
+| `build:all` | Build backend and frontend executables/assets all at once. |
+| `start:win:prod` | Run the compiled Windows executable. |
+| `start:linux:prod` | Run the compiled Linux executable. |
 
 ## 🛡️ API Validation
 This project uses Elysia's `t` schema validation. All API endpoints in `src/backend/index.ts` are strictly typed and documented automatically.
 
 ## 🎨 Styling
 Styles are managed in `src/frontend/App.css`. Bun natively handles CSS imports in your `.tsx` files, bundling them automatically for both Dev and Production.
+
+## N.B.
+
+If you see "bundle index.html", that is the static plugin, turning the html tsx refs into .js
