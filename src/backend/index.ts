@@ -23,18 +23,18 @@ const app = new Elysia()
         }
     })
     .onError(({ code, request, set }) => {
-        if (code === 'NOT_FOUND') {
+
             const url = new URL(request.url);
-            console.log(`Handling NOT_FOUND for ${url}`)
+            console.log(`onError Fallback called for ${url.pathname}`)
 
             // 1. Let missing API routes behave normally (return 404)
             if (url.pathname.startsWith('/api')) {
-                return new Response('Not Found', { status: 404 });
+                return new Response('Not Found', { status: 404, headers: { 'Content-Type': 'text/html' } });
             }
 
             // 2. Prevent an infinite loop just in case the root fails
             if (url.pathname === '/') {
-                return new Response('Root index.html not found', { status: 404 });
+                return new Response('Root index.html not found', { status: 404 ,headers: { 'Content-Type': 'text/html' }});
             }
 
             // 3. Ask our own server for the root page!
@@ -44,7 +44,7 @@ const app = new Elysia()
 
             console.log(`[SPA Fallback] Proxying ${request.url} -> / to trigger bundler`);
             return fetch(url.toString());
-        }
+
     })
     // Serve the React UI from the /public folder at the root '/'
     .use(isProd 

@@ -19,7 +19,7 @@ A lightweight, high-performance fullstack boilerplate using **Bun 1.3+**, **Elys
 │   └── frontend/       # React components & CSS
 ├── public/
 │   ├── index.html      # Frontend entry HTML
-│   ├── index.tsx       # Thin bridge to src/frontend
+│   ├── index.tsx       # Main SPA entry point
 │   └── dist/           # Bundled production assets (generated)
 ├── .env                # Environment configuration
 └── package.json        # Build & Dev scripts
@@ -37,8 +37,10 @@ The dev server uses Bun's Fullstack mode with HMR. Just run:
 ```bash
 bun run fullstack:dev
 ```
-- Frontend: [http://localhost:3000](http://localhost:3000) => [App.tsx](src/frontend/App.tsx)
-- Frontend: [http://localhost:3000/App2](http://localhost:3000/App2) => [App2.tsx](src/frontend/App2.tsx)
+- Frontend: [http://localhost:3000](http://localhost:3000) (Serves `App.tsx` by default)
+- Frontend: [http://localhost:3000/App2](http://localhost:3000/App2) (Serves `App2.tsx`)
+- Frontend: [http://localhost:3000/fake-path](http://localhost:3000/App2) (Serves `NotFound.tsx` for 404)
+- Frontend: Any other path will render the `NotFound` component.
 - API Docs: [http://localhost:3000/swagger](http://localhost:3000/swagger)
 
 ---
@@ -98,6 +100,7 @@ This project uses Elysia's `t` schema validation. All API endpoints in `src/back
 
 ## 🎨 Styling
 Styles are managed in `src/frontend/App.css`. Bun natively handles CSS imports in your `.tsx` files, bundling them automatically for both Dev and Production.
+The `ThemeToggleButton` component is now a reusable component in `src/frontend/ThemeToggleButton.tsx`.
 
 ## N.B.
 
