@@ -16,6 +16,7 @@ console.log(`🔨 Building frontend... (Minify: ${isMinify || isProd}, Prod: ${i
 const result = await Bun.build({
     entrypoints: ["./public/index.html"],
     outdir: "./public/dist",
+    publicPath: "/",
     plugins: [tailwind],
     minify: isMinify || isProd, // Always minify if in prod
     sourcemap: isProd ? "none" : "external",

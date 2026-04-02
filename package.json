@@ -11,7 +11,7 @@
     "build:fe": "bun run build.ts",
     "build:fe:min": "bun run build.ts --minify",
     "build:fe:min:prod": "bun run build.ts --production",
-    "build:all": "bun run build:be && bun run build:be:linux && bun run build:fe:min",
+    "build:all": "bun run build:fe:min && bun run build:be && bun run build:be:linux",
     "start:win:prod": "./server",
     "start:linux:prod": "./server-linux"
   },
