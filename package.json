@@ -8,9 +8,9 @@
     "start:prod": "bun run src/backend/index.ts --prod",
     "build:be": "bun build --compile --target bun --define process.env.NODE_ENV=\"'production'\" --outfile server src/backend/index.ts",
     "build:be:linux": "bun build --compile --target=bun-linux-x64 --define process.env.NODE_ENV=\"'production'\" src/backend/index.ts --outfile server-linux",
-    "build:fe": "bun build public/index.html --outdir ./public/dist",
-    "build:fe:min": "bun build public/index.html --outdir ./public/dist --minify",
-    "build:fe:min:prod": "bun build public/index.html --outdir ./public/dist --production",
+    "build:fe": "bun run build.ts",
+    "build:fe:min": "bun run build.ts --minify",
+    "build:fe:min:prod": "bun run build.ts --production",
     "build:all": "bun run build:be && bun run build:be:linux && bun run build:fe:min",
     "start:win:prod": "./server",
     "start:linux:prod": "./server-linux"
@@ -18,10 +18,14 @@
   "dependencies": {
     "@elysiajs/static": "latest",
     "@elysiajs/swagger": "^1.3.1",
-
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "elysia": "latest",
+    "lucide-react": "^1.7.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {

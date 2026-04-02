@@ -1,6 +1,7 @@
 import './App.css'
 import { ThemeToggleButton } from './ThemeToggleButton';
 import { useTheme } from './ThemeContext';
+import {Button} from "@frontend/components/ui/button";
 
 export function NotFound() {
     const { theme } = useTheme();
@@ -13,12 +14,12 @@ export function NotFound() {
             </div>
             <div>
                 <p>Sorry, we couldn't find the page you're looking for.</p>
-                <button
+                <br/>
+                <Button
                     onClick={()=> window.location.href = '/'}
-                    className={`button ${theme === 'dark' ? 'button-dark' : 'button-light'}`}
                 >
                     Back to Homepage
-                </button>
+                </Button>
             </div>
         </div>
     );

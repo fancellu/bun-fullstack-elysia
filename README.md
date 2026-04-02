@@ -99,9 +99,23 @@ bun run start:linux:prod
 This project uses Elysia's `t` schema validation. All API endpoints in `src/backend/index.ts` are strictly typed and documented automatically.
 
 ## 🎨 Styling
-Styles are managed in `src/frontend/App.css`. Bun natively handles CSS imports in your `.tsx` files, bundling them automatically for both Dev and Production.
+Styles are managed in `src/frontend/App.css` and `src/frontend/globals.css`. Bun natively handles CSS imports in your `.tsx` files, bundling them automatically for both Dev and Production.
 The `ThemeToggleButton` component is now a reusable component in `src/frontend/ThemeToggleButton.tsx`.
+
+Now it uses tailwind v4 and shadcn
+
+For example to add a button 
+
+`bunx --bun shadcn@latest add button`
 
 ## N.B.
 
 If you see "bundle index.html", that is the static plugin, turning the html tsx refs into .js
+
+
+## bun build CLI integration is not yet available for fullstack apps
+
+https://bun.com/docs/bundler/fullstack#current-limitations
+> bun build CLI integration is not yet available for fullstack apps
+
+Hence the need for [build.ts](build.ts), which we call from package.json

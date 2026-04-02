@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import { App } from '../src/frontend/App'
-import { App2 } from '../src/frontend/App2'
-import { NotFound } from '../src/frontend/NotFound'
-import { ThemeProvider } from '../src/frontend/ThemeContext'
+import { App } from '@frontend/App'
+import { App2 } from '@frontend/App2'
+import { NotFound } from '@frontend/NotFound'
+import { ThemeProvider } from '@frontend/ThemeContext'
+import {StrictMode} from "react";
+import '@frontend/globals.css'
 
 const root = createRoot(document.getElementById('root')!)
 
@@ -20,6 +22,8 @@ if (path === '/') {
 
 root.render(
     <ThemeProvider>
+        <StrictMode>
         {componentToRender}
+        </StrictMode>
     </ThemeProvider>
 )

@@ -1,19 +1,16 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
-// Define the shape of the context data
 interface ThemeContextType {
     theme: 'light' | 'dark';
     toggleTheme: () => void;
 }
 
-// Create the context with a default value
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Create the provider component
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-    // Load initial theme from localStorage or system preference
+    // 1. Load initial theme
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
         if (savedTheme) {
@@ -23,12 +20,14 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         }
     }, []);
 
-    // Apply theme changes to the body and save to localStorage
+    // 2. The Tailwind Way: Manage the class on the HTML root element
     useEffect(() => {
+        const root = window.document.documentElement;
+
+        root.classList.remove('light', 'dark');
+        root.classList.add(theme);
+
         localStorage.setItem('theme', theme);
-        document.body.style.backgroundColor = theme === 'dark' ? '#121212' : '#ffffff';
-        document.body.style.color = theme === 'dark' ? '#ffffff' : '#000000';
-        document.body.style.margin = '0';
     }, [theme]);
 
     const toggleTheme = () => {
@@ -42,7 +41,6 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     );
 }
 
-// Create a custom hook for easy consumption of the context
 export function useTheme() {
     const context = useContext(ThemeContext);
     if (context === undefined) {
