@@ -1,6 +1,7 @@
 import { Elysia, t } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { swagger } from '@elysiajs/swagger'
+import '@frontend/globals.css'
 
 // Check for NODE_ENV=production OR a --prod CLI flag (easier for Windows .exe)
 const isProd = process.env.NODE_ENV === 'production' || Bun.argv.includes('--prod')
