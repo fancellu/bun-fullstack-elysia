@@ -7,6 +7,7 @@ A lightweight, high-performance fullstack boilerplate using **Bun 1.3+**, **Elys
 - **🚀 Bun 1.3 Fullstack Magic**: Native TSX transpilation and HMR (Hot Module Replacement) with zero config.
 - **⚡ ElysiaJS Backend**: High-performance backend with built-in schema validation and documentation.
 - **🛠️ Zero Build Dev**: Reference `.tsx` directly in your HTML during development.
+- **🎨 Modern Styling**: Integrated with **Tailwind CSS v4** and **shadcn/ui** for rapid UI development.
 - **📦 Production Ready**: Seamless transition from Dev (on-the-fly) to Prod (pre-bundled/minified).
 - **📖 API Docs**: Automatic Swagger documentation available at `/swagger`.
 - **🖥️ Standalone Executables**: Compile your entire app into a single Windows or Linux binary.
@@ -100,18 +101,20 @@ This project uses Elysia's `t` schema validation. All API endpoints in `src/back
 
 ## 🎨 Styling
 Styles are managed in `src/frontend/App.css` and `src/frontend/globals.css`. Bun natively handles CSS imports in your `.tsx` files, bundling them automatically for both Dev and Production.
-The `ThemeToggleButton` component is now a reusable component in `src/frontend/ThemeToggleButton.tsx`.
 
-Now it uses tailwind v4 and shadcn
+This project uses **Tailwind CSS v4** and **shadcn/ui**.
 
-For example to add a button 
+For example, to add a button component using shadcn: 
 
-`bunx --bun shadcn@latest add button`
+```bash
+bunx --bun shadcn@latest add button
+```
+
+The `ThemeToggleButton` component is a reusable component available in `src/frontend/ThemeToggleButton.tsx`.
 
 ## N.B.
 
 If you see "bundle index.html", that is the static plugin, turning the html tsx refs into .js
-
 
 ## bun build CLI integration is not yet available for fullstack apps
 
