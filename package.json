@@ -6,13 +6,11 @@
     "audit": "bun audit",
     "fullstack:dev": "bun run --watch src/backend/index.ts",
     "start:prod": "bun run src/backend/index.ts --prod",
+    "build:fe:prod": "bun run build.ts --production",
     "build:be": "bun build --compile --target bun --define process.env.NODE_ENV=\"'production'\" --outfile server src/backend/index.ts",
     "build:be:linux": "bun build --compile --target=bun-linux-x64 --define process.env.NODE_ENV=\"'production'\" src/backend/index.ts --outfile server-linux",
-    "build:fe": "bun run build.ts",
-    "build:fe:min": "bun run build.ts --minify",
-    "build:fe:min:prod": "bun run build.ts --production",
-    "build:all": "bun run build:fe:min && bun run build:be && bun run build:be:linux",
-    "start:win:prod": "./server",
+    "build:all": "bun run build:fe:prod && bun run build:be && bun run build:be:linux",
+    "start:win:prod": "./server.exe",
     "start:linux:prod": "./server-linux"
   },
   "dependencies": {

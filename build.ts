@@ -1,35 +1,37 @@
 // build.ts
 import tailwind from "bun-plugin-tailwind";
+import { rmSync, readFileSync, writeFileSync } from "node:fs";
 
-// Read the flags passed from the package.json scripts
+// 1. Wipe out old artifacts so public/dist is completely clean!
+try { rmSync("./public/dist", { recursive: true, force: true }); } catch (e) {}
+
 const args = process.argv.slice(2);
-const isMinify = args.includes("--minify");
 const isProd = args.includes("--production");
+if (isProd) process.env.NODE_ENV = "production";
 
-// React relies on NODE_ENV to strip out dev tools in production
-if (isProd) {
-    process.env.NODE_ENV = "production";
-}
+console.log(`🔨 Building frontend...`);
 
-console.log(`🔨 Building frontend... (Minify: ${isMinify || isProd}, Prod: ${isProd})`);
-
+// 2. Build the TSX directly (NOT the HTML file!)
 const result = await Bun.build({
-    entrypoints: ["./public/index.html"],
+    entrypoints: ["./public/index.tsx"],
     outdir: "./public/dist",
-    publicPath: "/",
+    naming: "[dir]/[name].[ext]", // This forces exactly: index.js and index.css
     plugins: [tailwind],
-    minify: isMinify || isProd, // Always minify if in prod
+    minify: isProd,
     sourcemap: isProd ? "none" : "external",
-    define: {
-        // Hardcode the environment variable into the compiled React code
-        "process.env.NODE_ENV": JSON.stringify(isProd ? "production" : "development"),
-    }
+    define: { "process.env.NODE_ENV": JSON.stringify(isProd ? "production" : "development") }
 });
 
-if (result.success) {
-    console.log("✅ Frontend build complete! 🚀");
-} else {
-    console.error("❌ Build failed:");
-    console.error(result.logs);
-    process.exit(1); // Ensure the CI/CD pipeline stops if the build fails
+if (!result.success) {
+    console.error("❌ Build failed:\n", result.logs);
+    process.exit(1);
 }
+
+// 3. Manually copy the HTML and point it to the predictable JS and CSS files
+console.log("📄 Patching index.html for production...");
+let html = readFileSync("./public/index.html", "utf-8");
+html = html.replace('src="./index.tsx"', 'src="/index.js"');
+html = html.replace('</head>', '    <link rel="stylesheet" href="/index.css">\n</head>');
+writeFileSync("./public/dist/index.html", html);
+
+console.log("✅ Frontend build complete! 🚀");

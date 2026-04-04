@@ -44,3 +44,5 @@ server.exe
 server-linux
 .idea
 dist
+
+.*.bun-build
