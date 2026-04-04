@@ -11,7 +11,8 @@
     "build:be:linux": "bun build --compile --target=bun-linux-x64 --define process.env.NODE_ENV=\"'production'\" src/backend/index.ts --outfile server-linux",
     "build:all": "bun run build:fe:prod && bun run build:be && bun run build:be:linux",
     "start:win:prod": "./server.exe",
-    "start:linux:prod": "./server-linux"
+    "start:linux:prod": "./server-linux",
+    "knip": "knip --dependencies"
   },
   "dependencies": {
     "@elysiajs/static": "latest",
@@ -20,18 +21,16 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "elysia": "latest",
-    "lucide-react": "^1.7.0",
+    "knip": "^6.3.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "bun-plugin-tailwind": "^0.1.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "bun-types": "latest",
-    "concurrently": "^9.2.1"
+    "bun-plugin-tailwind": "^0.1.2"
   },
   "module": "src/backend/index.ts"
 }
