@@ -1,6 +1,9 @@
 {
   "entry": ["src/backend/**/*.{ts,js}","src/frontend/**/*.{ts,js,tsx}","public/index.tsx"],
   "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignoreDependencies": [
+    "bun-types"
+  ],
   "tags": [
     "-lintignore"
   ]
