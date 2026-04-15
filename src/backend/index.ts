@@ -78,7 +78,8 @@ const app = new Elysia()
 // 🚧 DEVELOPMENT MODE (Uses Elysia's Plugin to compile TSX on the fly)
 // =========================================================
 if (!isProd) {
-    app.use(await staticPlugin({ alwaysStatic: false, assets: publicFolder, prefix: '/' }));
+    // In staticPlugin 1.4.9 they turned off html bundling by default!!
+    app.use(await staticPlugin({ alwaysStatic: false, assets: publicFolder, prefix: '/', bunFullstack : true }));
 }
 // =========================================================
 // 🚀 PRODUCTION MODE (Serves the 3 files directly from Binary RAM)
