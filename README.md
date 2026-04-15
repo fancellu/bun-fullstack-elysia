@@ -2,19 +2,6 @@
 
 A lightweight, high-performance fullstack boilerplate using **Bun 1.3+**, **ElysiaJS**, and **React** (without Vite or Webpack). This setup leverages Bun's native transpiler and fullstack server for an incredibly fast development experience, and deploys as a **zero-dependency single-file executable**.
 
-## N.B. Needs Bun 1.3.11
-
-Bun 1.3.12 somehow broke it! It would not transpile the [index.tsx](public/index.tsx)
-
-In windows
-
-`iex "& {$(irm https://bun.sh/install.ps1)} -Version 1.3.11"`
-
-or
-
-`npm install -g bun@1.3.11`
-
-
 ## ✨ Features
 
 * **🚀 Bun 1.3 Fullstack Magic**: Native TSX transpilation and HMR (Hot Module Replacement) with zero config.
